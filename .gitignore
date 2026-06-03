@@ -1,0 +1,28 @@
+# Local secrets
+*.env
+config/.env
+**/config/.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+**/.venv/
+
+# Node
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+
+# Logs
+*.log
+logs/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
