@@ -14,7 +14,7 @@ pro = ts.pro_api(TUSHARE_TOKEN)
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Sync stock premarket share data from Tushare stk_premarket."
+        description="Sync daily share data from Tushare daily_basic."
     )
     parser.add_argument(
         "--trade-date",
@@ -63,11 +63,17 @@ def get_latest_quote_trade_date():
         return conn.execute(text("SELECT MAX(trade_date) FROM daily_quotes")).scalar_one_or_none()
 
 
-def fetch_stock_premarket(trade_date):
-    return pro.stk_premarket(
+def fetch_daily_basic_shares(trade_date):
+    df = pro.daily_basic(
         trade_date=trade_date,
         fields="trade_date,ts_code,total_share,float_share",
     )
+    df.attrs["source"] = "daily_basic"
+    return df
+
+
+def fetch_stock_premarket(trade_date):
+    return fetch_daily_basic_shares(trade_date)
 
 
 def save_stock_premarket(df):
@@ -113,7 +119,8 @@ def main():
 
     create_stock_premarket_table()
     df = fetch_stock_premarket(trade_date)
-    print(f"Fetched {len(df)} stock_premarket row(s) for {trade_date}.")
+    source = df.attrs.get("source", "daily_basic")
+    print(f"Fetched {len(df)} stock_premarket row(s) for {trade_date} from {source}.")
 
     if args.dry_run:
         print("Dry run finished. No rows were written.")

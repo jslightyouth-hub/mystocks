@@ -1,13 +1,22 @@
 # Local secrets
 *.env
+.env.*
+!.env.example
 config/.env
 **/config/.env
+*.pem
+*.key
 
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 **/.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
 # Node
 node_modules/
@@ -15,10 +24,33 @@ node_modules/
 dist/
 **/dist/
 dist-ssr/
+coverage/
+.vite/
 
 # Logs
 *.log
 logs/
+**/logs/
+admin_logs/
+**/admin_logs/
+
+# Local databases and exported data
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+
+# Browser/debug profiles and screenshots
+edge-debug-profile/
+chrome-debug-profile/
+playwright-report/
+test-results/
+*-preview.png
+*.webm
 
 # OS/editor
 .DS_Store
